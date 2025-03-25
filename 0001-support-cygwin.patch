@@ -46,6 +46,15 @@ diff --git a/src/common.rs b/src/common.rs
 index d4a8a32daeb5..f4af57cd98e7 100644
 --- a/src/common.rs
 +++ b/src/common.rs
+@@ -1070,7 +1070,7 @@ pub fn get_obfuscation_read_char() -> char {
+ /// In this case, we assume no external program has written to the terminal behind our back, making
+ /// the multiline prompt usable. See #2859 and https://github.com/Microsoft/BashOnWindows/issues/545
+ pub fn has_working_tty_timestamps() -> bool {
+-    if cfg!(target_os = "windows") {
++    if cfg!(any(target_os = "windows", target_os = "cygwin")) {
+         false
+     } else if cfg!(target_os = "linux") {
+         !is_windows_subsystem_for_linux(WSL::V1)
 @@ -1124,11 +1124,10 @@ pub fn str2wcstring(inp: &[u8]) -> WString {
              // TODO This check used to be conditionally compiled only on affected platforms.
              true

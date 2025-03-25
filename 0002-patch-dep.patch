@@ -9,7 +9,7 @@ index c942fcaee..b74643553 100644
 +
 +[patch.'crates-io']
 +libc = { git = "https://github.com/Berrysoft/libc.git", branch = "dev/cygwin" }
-+nix = { git = "https://github.com/Berrysoft/nix.git", branch = "dev/cygwin" }
++nix = { git = "https://github.com/nix-rust/nix.git" }
 +errno = { git = "https://github.com/lambda-fairy/rust-errno.git" }
 diff --git a/src/common.rs b/src/common.rs
 index f4af57cd9..48252b7e6 100644

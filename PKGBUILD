@@ -1,7 +1,7 @@
 _realname=fish-shell
 pkgname=fish
 pkgver=4.0.1
-pkgrel=2
+pkgrel=3
 epoch=
 pkgdesc='Smart and user friendly shell intended mostly for interactive use'
 arch=('x86_64')
@@ -24,8 +24,8 @@ source=("https://github.com/fish-shell/fish-shell/archive/refs/tags/$pkgver.tar.
         msystem.fish
         perlbin.fish)
 sha256sums=('fd1b3629c0000711cadfce0e106704656e8c23fe608425f69687edda54d5f9b0'
-            '4bb071ce5f7c1221636e7da434719c6411926cc9fea21ebf3dbd9440d948b9bf'
-            '19bb974c026f1d22768fdde7d3a6de38d084b9e1d2a62b0780261fbca8e63f76'
+            '8795c741d53faa251152cddf54cd1ab13213c40e2569baae814b97b82919e1fb'
+            '1fff38aedfc8f2c9910d83b97521368b32aee42b7a830fe0c46447193008b613'
             '983c3273e0249957ed6c40785e005739da30f31d4f029383f257f9990d38811a'
             '8bb0d28df47b66e6785f7db00a2c4316bc15960e67bdec0daca7f811f5bf3895'
             'b1a7b7b4238170373dd8acdc36bcbd1fc3978b3525403b877576139d6090e30d'
