@@ -1,7 +1,7 @@
 _realname=fish-shell
 pkgname=fish
 pkgver=4.0.1
-pkgrel=1
+pkgrel=2
 epoch=
 pkgdesc='Smart and user friendly shell intended mostly for interactive use'
 arch=('x86_64')
@@ -12,7 +12,7 @@ msys2_references=(
 )
 license=('spdx:GPL-2.0-only')
 depends=('gcc-libs' 'gettext' 'libpcre2_32' 'libpcre2_8' 'man-db')
-makedepends=('gcc' 'gettext-devel' 'intltool' 'pcre2-devel' 'cmake' 'mingw-w64-clang-x86_64-python-sphinx')
+makedepends=('gcc' 'gettext-devel' 'intltool' 'pcre2-devel' 'cmake' 'pkgconf' 'mingw-w64-clang-x86_64-python-sphinx')
 optdepends=('python: for manual page completion parser and web configuration tool')
 install=fish.install
 backup=('etc/fish/config.fish' 'etc/fish/msys2.fish' 'etc/fish/perlbin.fish')
@@ -47,6 +47,8 @@ build() {
   export MSYS2_ENV_CONV_EXCL='DOCDIR;DATADIR;SYSCONFDIR;BINDIR;LOCALEDIR;PREFIX'
   export SPHINX_DIR=/clang64
   export FISH_BUILD_VERSION=${pkgver}-Berrysoft-${pkgrel}
+  export PKG_CONFIG_ALLOW_CROSS=1
+  export PYTHONUTF8=1
   MSYS2_ARG_CONV_EXCL='*' cmake $srcdir/$_realname-$pkgver \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc \
