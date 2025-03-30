@@ -16,20 +16,6 @@ diff --git a/build.rs b/build.rs
 index c633905e28b5..8f87702322ec 100644
 --- a/build.rs
 +++ b/build.rs
-@@ -96,7 +96,12 @@ fn detect_cfgs(target: &mut Target) {
-             Ok(target.has_symbol("localeconv_l"))
-         }),
-         ("FISH_USE_POSIX_SPAWN", &|target| {
--            Ok(target.has_header("spawn.h"))
-+            if env::var("CARGO_CFG_TARGET_OS").unwrap() == "cygwin" {
-+                // `POSIX_SPAWN_SETSIGDEF` is broken
-+                Ok(false)
-+            } else {
-+                Ok(target.has_header("spawn.h"))
-+            }
-         }),
-         ("HAVE_PIPE2", &|target| {
-             Ok(target.has_symbol("pipe2"))
 @@ -227,6 +232,11 @@ fn has_small_stack(_: &Target) -> Result<bool, Box<dyn Error>> {
  }
  
