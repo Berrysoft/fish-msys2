@@ -181,24 +181,6 @@ index 3e1334479819..c5f1caa60530 100644
          }
          WcWidth::Ambiguous | WcWidth::PrivateUse => {
              // TR11: "All private-use characters are by default classified as Ambiguous".
-diff --git a/src/fd_monitor.rs b/src/fd_monitor.rs
-index 26151efba136..0c18436f0d65 100644
---- a/src/fd_monitor.rs
-+++ b/src/fd_monitor.rs
-@@ -389,7 +389,12 @@ impl BackgroundFdMonitor {
-                     .map(|duration| duration.as_micros() as u64)
-                     .unwrap_or(FdReadableSet::kNoTimeout),
-             );
--            if ret < 0 && errno::errno().0 != libc::EINTR {
-+            // Cygwin reports ret < 0 && errno == 0 as success.
-+            let err = errno().0;
-+            if ret < 0
-+                && !matches!(err, libc::EINTR | libc::EBADF)
-+                && !(cfg!(target_os = "cygwin") && err == 0)
-+            {
-                 // Surprising error
-                 perror("select");
-             }
 diff --git a/src/fork_exec/mod.rs b/src/fork_exec/mod.rs
 index 2c10fccd5202..c0d0de46e2b9 100644
 --- a/src/fork_exec/mod.rs
