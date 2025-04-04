@@ -8,9 +8,9 @@ index c942fcaee..b74643553 100644
  clippy.needless_lifetimes = "allow"
 +
 +[patch.'crates-io']
-+libc = { git = "https://github.com/Berrysoft/libc.git", branch = "dev/cygwin" }
++libc = { git = "https://github.com/rust-lang/libc.git", branch = "libc-0.2" }
 +nix = { git = "https://github.com/nix-rust/nix.git" }
-+errno = { git = "https://github.com/lambda-fairy/rust-errno.git" }
++
 diff --git a/src/common.rs b/src/common.rs
 index f4af57cd9..48252b7e6 100644
 --- a/src/common.rs

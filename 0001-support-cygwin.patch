@@ -80,41 +80,6 @@ index 2f2950718e41..030988a79159 100644
          FISH_EMOJI_WIDTH.store(width, Ordering::Relaxed);
          FLOG!(term_support, "default emoji width:", width);
      }
-diff --git a/src/exec.rs b/src/exec.rs
-index bebd7dc8c07d..439ef85b9aac 100644
---- a/src/exec.rs
-+++ b/src/exec.rs
-@@ -12,6 +12,7 @@ use crate::common::{
-     wcs2zstring, write_loop, ScopeGuard,
- };
- use crate::env::{EnvMode, EnvStack, Environment, Statuses, READ_BYTE_LIMIT};
-+#[cfg(FISH_USE_POSIX_SPAWN)]
- use crate::env_dispatch::use_posix_spawn;
- use crate::fds::make_fd_blocking;
- use crate::fds::{make_autoclose_pipes, open_cloexec, PIPE_ERROR};
-@@ -34,10 +35,12 @@ use crate::null_terminated_array::{
-     null_terminated_array_length, AsNullTerminatedArray, OwningNullTerminatedArray,
- };
- use crate::parser::{Block, BlockId, BlockType, EvalRes, Parser};
-+#[cfg(FISH_USE_POSIX_SPAWN)]
-+use crate::proc::Pid;
- use crate::proc::{
-     hup_jobs, is_interactive_session, jobs_requiring_warning_on_exit, no_exec,
--    print_exit_warning_for_jobs, InternalProc, Job, JobGroupRef, Pid, ProcStatus, Process,
--    ProcessType, TtyTransfer,
-+    print_exit_warning_for_jobs, InternalProc, Job, JobGroupRef, ProcStatus, Process, ProcessType,
-+    TtyTransfer,
- };
- use crate::reader::{reader_run_count, restore_term_mode};
- use crate::redirection::{dup2_list_resolve_chain, Dup2List};
-@@ -447,6 +450,7 @@ fn launch_process_nofork(vars: &EnvStack, p: &Process) -> ! {
- // To avoid the race between the caller calling tcsetpgrp() and the client checking the
- // foreground process group, we don't use posix_spawn if we're going to foreground the process. (If
- // we use fork(), we can call tcsetpgrp after the fork, before the exec, and avoid the race).
-+#[cfg(FISH_USE_POSIX_SPAWN)]
- fn can_use_posix_spawn_for_job(job: &Job, dup2s: &Dup2List) -> bool {
-     // Is it globally disabled?
-     if !use_posix_spawn() {
 diff --git a/src/fallback.rs b/src/fallback.rs
 index 3e1334479819..c5f1caa60530 100644
 --- a/src/fallback.rs
@@ -181,18 +146,6 @@ index 3e1334479819..c5f1caa60530 100644
          }
          WcWidth::Ambiguous | WcWidth::PrivateUse => {
              // TR11: "All private-use characters are by default classified as Ambiguous".
-diff --git a/src/fork_exec/mod.rs b/src/fork_exec/mod.rs
-index 2c10fccd5202..c0d0de46e2b9 100644
---- a/src/fork_exec/mod.rs
-+++ b/src/fork_exec/mod.rs
-@@ -4,6 +4,7 @@
- 
- pub mod flog_safe;
- pub mod postfork;
-+#[cfg(FISH_USE_POSIX_SPAWN)]
- pub mod spawn;
- use crate::proc::Job;
- use libc::{SIGINT, SIGQUIT};
 diff --git a/src/input_common.rs b/src/input_common.rs
 index 3cdf5b6edc68..d49b718ed667 100644
 --- a/src/input_common.rs
