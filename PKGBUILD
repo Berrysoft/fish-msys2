@@ -10,7 +10,7 @@ msys2_references=(
   "cpe: cpe:/a:fishshell:fish"
 )
 license=('spdx:GPL-2.0-only')
-depends=('msys2-runtime>=3.6.0' 'gcc-libs' 'gettext' 'libpcre2_32' 'libpcre2_8' 'man-db')
+depends=('gcc-libs' 'gettext' 'libpcre2_32' 'libpcre2_8' 'man-db')
 makedepends=('gcc' 'gettext-devel' 'intltool' 'pcre2-devel' 'cmake' 'pkgconf')
 optdepends=('python: for manual page completion parser and web configuration tool')
 install=fish.install

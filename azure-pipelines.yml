@@ -22,7 +22,6 @@ jobs:
       $env:PATH="$PATH;C:\msys64\usr\bin;"
       C:\msys64\usr\bin\pacman.exe -Syu --noconfirm
       C:\msys64\usr\bin\pacman.exe -S --noconfirm binutils diffutils make patch
-      C:\msys64\usr\bin\bash.exe -c "yes |pacman -S msys2-runtime-3.6"
     displayName: "Install pre-package dependencies"
 
   - pwsh: |
