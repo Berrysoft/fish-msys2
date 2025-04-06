@@ -1,0 +1,84 @@
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+      - README.md
+
+jobs:
+- job: Package
+  pool:
+    vmImage: 'windows-latest'
+
+  steps:
+  - pwsh: |
+      git config core.autocrlf false
+      rm .git/index
+      git reset --hard
+    displayName: "Fix CRLF"
+
+  - pwsh: |
+      $env:PATH="$PATH;C:\msys64\usr\bin;"
+      C:\msys64\usr\bin\pacman.exe -Syu --noconfirm
+      C:\msys64\usr\bin\pacman.exe -S --noconfirm binutils diffutils make patch
+    displayName: "Install pre-package dependencies"
+
+  - pwsh: |
+      rm -r -Force C:\msys64\home\$env:USERNAME
+      New-Item -ItemType Junction -Target "C:\Users\$env:USERNAME" -Path "C:\msys64\home\$env:USERNAME"
+      echo "INPUT(libmsys-2.0.a)" | Out-File -FilePath "C:\msys64\usr\lib\libcygwin.a"
+      rustup install nightly --profile=minimal
+      rustup default nightly
+      rustup component add rust-src
+    displayName: "Configure Rust"
+
+  - pwsh: |
+      $env:PATH="$PATH;C:\msys64\usr\bin;"
+      C:\msys64\usr\bin\bash.exe -c "makepkg -s --noconfirm --nocheck"
+    displayName: "Package"
+
+  - task: CopyFiles@2
+    inputs:
+      contents: '**/*.pkg.tar.*' 
+      targetFolder: $(build.artifactstagingdirectory)
+      flattenFolders: true
+      preserveTimestamp: true
+    displayName: "Copy packages"
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      ArtifactName: 'fish4'
+
+- job: Publish
+  dependsOn:
+  - Package
+  pool:
+    vmImage: 'windows-latest'
+
+  variables:
+  - group: GitHubPATGroup
+
+  steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifact: 'fish4'
+      path: $(Build.SourcesDirectory)/repo
+    displayName: "Download packages"
+
+  - pwsh: |
+      $env:PATH="$PATH;C:\msys64\usr\bin;"
+      cd $(Build.SourcesDirectory)/repo
+      C:\msys64\usr\bin\bash.exe -c "repo-add fish4.db.tar.gz *"
+    displayName: "Run repo-add"
+
+  - pwsh: |
+      git config --global user.name "$(GitHubName)"
+      git config --global user.email "$(GitHubEmail)"
+      cd $(Build.SourcesDirectory)/repo
+      git init
+      git checkout -b publish
+      git add -A
+      git commit -m "Create build $(Build.BuildId)"
+      git push -f https://$(GitHubPAT)@github.com/Berrysoft/fish-msys2.git publish
+    displayName: 'Publish to GitHub'
