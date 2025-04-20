@@ -23,7 +23,7 @@ source=("https://github.com/fish-shell/fish-shell/releases/download/$pkgver/fish
         msystem.fish
         perlbin.fish)
 sha256sums=('6e1ecdb164285fc057b2f35acbdc20815c1623099e7bb47bbfc011120adf7e83'
-            '41b5aa71df398a481f502a753f1f1e4da660035b4b2f96349efd60411c3d5379'
+            '8b94656c9f6118c19efa2bcb960b447863ff8b9b1f6ee957e00d6d87d8ef79f0'
             'd42813e834b4005ab62289ef2af151912a5dc3bfd91020b1bec05c26706e88a5'
             '983c3273e0249957ed6c40785e005739da30f31d4f029383f257f9990d38811a'
             '8bb0d28df47b66e6785f7db00a2c4316bc15960e67bdec0daca7f811f5bf3895'
