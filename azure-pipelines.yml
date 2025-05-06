@@ -28,9 +28,6 @@ jobs:
       rm -r -Force C:\msys64\home\$env:USERNAME
       New-Item -ItemType Junction -Target "C:\Users\$env:USERNAME" -Path "C:\msys64\home\$env:USERNAME"
       echo "INPUT(libmsys-2.0.a)" | Out-File -FilePath "C:\msys64\usr\lib\libcygwin.a"
-      rustup install nightly --profile=minimal
-      rustup default nightly
-      rustup component add rust-src
     displayName: "Configure Rust"
 
   - pwsh: |
