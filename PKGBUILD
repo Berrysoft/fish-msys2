@@ -24,7 +24,7 @@ source=("https://github.com/fish-shell/fish-shell/releases/download/$pkgver/fish
         perlbin.fish)
 sha256sums=('6e1ecdb164285fc057b2f35acbdc20815c1623099e7bb47bbfc011120adf7e83'
             '8b94656c9f6118c19efa2bcb960b447863ff8b9b1f6ee957e00d6d87d8ef79f0'
-            'dcd5609497b8a2fa30add1a4898f71c34b419ddbf2895542dfabc7bc04f786f8'
+            'b2739eee8f030f468eaf435982ac50056738f5a7bfefe5288cd13430f57498bc'
             '983c3273e0249957ed6c40785e005739da30f31d4f029383f257f9990d38811a'
             '8bb0d28df47b66e6785f7db00a2c4316bc15960e67bdec0daca7f811f5bf3895'
             'b1a7b7b4238170373dd8acdc36bcbd1fc3978b3525403b877576139d6090e30d'
