@@ -1,16 +1,16 @@
 diff --git a/Cargo.toml b/Cargo.toml
-index c942fcaee..b74643553 100644
+index 37cdc1332..3aa89374e 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -107,3 +107,8 @@ rust.unstable_name_collisions = "allow"
- clippy.manual_range_contains = "allow"
- clippy.needless_return = "allow"
- clippy.needless_lifetimes = "allow"
-+
-+[patch.'crates-io']
-+
-+nix = { git = "https://github.com/nix-rust/nix.git" }
-+
+@@ -40,7 +40,7 @@ libc = "0.2"
+ # disabling default features uses the stdlib instead, but it doubles the time to rewrite the history
+ # files as of 22 April 2024.
+ lru = "0.13.0"
+-nix = { version = "0.29.0", default-features = false, features = [
++nix = { version = "0.30.1", default-features = false, features = [
+     "event",
+     "inotify",
+     "resource",
 diff --git a/src/common.rs b/src/common.rs
 index f4af57cd9..48252b7e6 100644
 --- a/src/common.rs
