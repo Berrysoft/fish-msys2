@@ -28,6 +28,7 @@ jobs:
       $env:PATH="C:\msys64\usr\bin;$PATH;"
       wget https://github.com/Berrysoft/rust/releases/download/1.89.0-dev/rust-1.89.0.g7c8be3d3816-1-x86_64.pkg.tar.zst
       C:\msys64\usr\bin\pacman.exe -U --noconfirm rust-1.89.0.g7c8be3d3816-1-x86_64.pkg.tar.zst
+      rm rust-1.89.0.g7c8be3d3816-1-x86_64.pkg.tar.zst
     displayName: "Configure Rust"
 
   - pwsh: |
