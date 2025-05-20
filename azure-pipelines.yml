@@ -19,19 +19,19 @@ jobs:
     displayName: "Fix CRLF"
 
   - pwsh: |
-      $env:PATH="$PATH;C:\msys64\usr\bin;"
+      $env:PATH="C:\msys64\usr\bin;$PATH;"
       C:\msys64\usr\bin\pacman.exe -Syu --noconfirm
       C:\msys64\usr\bin\pacman.exe -S --noconfirm binutils diffutils make patch
     displayName: "Install pre-package dependencies"
 
   - pwsh: |
-      rm -r -Force C:\msys64\home\$env:USERNAME
-      New-Item -ItemType Junction -Target "C:\Users\$env:USERNAME" -Path "C:\msys64\home\$env:USERNAME"
-      echo "INPUT(libmsys-2.0.a)" | Out-File -FilePath "C:\msys64\usr\lib\libcygwin.a"
+      $env:PATH="C:\msys64\usr\bin;$PATH;"
+      wget https://github.com/Berrysoft/rust/releases/download/1.89.0-dev/rust-1.89.0.g7c8be3d3816-1-x86_64.pkg.tar.zst
+      C:\msys64\usr\bin\pacman.exe -U rust-1.89.0.g7c8be3d3816-1-x86_64.pkg.tar.zst
     displayName: "Configure Rust"
 
   - pwsh: |
-      $env:PATH="$PATH;C:\msys64\usr\bin;"
+      $env:PATH="C:\msys64\usr\bin;$PATH;"
       C:\msys64\usr\bin\bash.exe -c "makepkg -s --noconfirm --nocheck"
     displayName: "Package"
 
