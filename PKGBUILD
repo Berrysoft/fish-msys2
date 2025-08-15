@@ -44,7 +44,6 @@ build() {
 
   export CXXFLAGS+=" ${CPPFLAGS}"
   export FISH_BUILD_VERSION=${pkgver}-Berrysoft-${pkgrel}
-  export CARGO_TARGET_X86_64_PC_CYGWIN_LINKER=x86_64-pc-msys-gcc
   export MSYS="winsymlinks:native"
   cmake $srcdir/$pkgname-$pkgver \
     -DCMAKE_INSTALL_PREFIX=/usr \
